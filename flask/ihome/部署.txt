@@ -1,0 +1,57 @@
+
+flask项目的nginx的配置文件：ihome.conf
+
+server {
+        listen  5000;
+        listen  [::]:5000;
+        server_name     www.ihome.com;
+        charset utf-8;
+
+        access_log      /usr/local/flask_proj/ihome/log/access.log      main;
+        error_log       /usr/local/flask_proj/ihome/log/error.log       error;
+
+        location / {
+                include /etc/nginx/uwsgi_params;
+                uwsgi_pass 127.0.0.1:911;
+        }
+}
+
+
+flask项目uwsgi配置文件：uwsgi.ini
+
+[uwsgi]
+
+# 指定项目目录
+chdir = /usr/local/flask_proj/ihome/ihome/
+
+# 指定uwsgi的套接字端口，与nginx配置中的套接字端口一致
+socket = 127.0.0.1:911
+chmod-socket = 664
+chown-socket = root:nginx
+
+# 指定运行项目打开的第一个文件
+wsgi-file = /usr/local/flask_proj/ihome/ihome/manage.py
+
+# 指定manage.py文件中app的名字，通常我们是命名为app所以为app
+callable = app
+
+# 允许存在主进程
+master = true
+
+# 设置开启的进程的数量
+processes = 4
+
+# 服务器退出时自动清理环境
+vacuum = true
+
+#指定配置好的虚拟环境目录
+virtualenv = /usr/local/python3/pythonenvs/ihome_env/
+
+# 设置日志，daemonize指定为后台运行，logto表示指定为前台运行，但是日志输出到指定的文件中
+daemonize = /usr/local/flask_proj/ihome/log/uwsgi.log
+log-truncate = true
+log-maxsize = 5000000
+
+
+
+

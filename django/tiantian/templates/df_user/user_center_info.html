@@ -1,0 +1,46 @@
+{% extends 'df_user/base.html' %}
+{% block right_content %}
+    <div class="right_content clearfix">
+        <div class="info_con clearfix">
+            <h3 class="common_title2">基本信息</h3>
+            <ul class="user_info_list">
+                <li><span>用户名：</span>{{ user.u_name }}</li>
+                <li><span>联系方式：</span>{{ user.u_email }}</li>
+                <li><span>联系地址：</span>北京市昌平区</li>
+            </ul>
+        </div>
+
+        <h3 class="common_title2">最近浏览</h3>
+        <div class="has_view_list">
+            <ul class="goods_type_list clearfix">
+
+                {#				<--开始处理-->#}
+                {% for good in goods %}
+                    <li>
+                        <a href=""><img src="/static/{{ good.pro_img }}"></a>
+                        <h4><a href="">{{ good.pro_name }}</a></h4>
+                        <div class="operate">
+                            <span class="prize">￥{{ good.price }}</span>
+                            <span class="unit">500g</span>
+                            <a href="" class="add_goods" goodid="{{ good.id }}" title="加入购物车"></a>
+                        </div>
+                    </li>
+                {% endfor %}
+                {#				<--处理结束-->#}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $('.add_goods').click(function () {
+            goodids = $(this).attr('goodid')
+            url = '/cart/add' + goodids + '_1/';
+            $.get(url, function (data) {
+                $('#show_count').text(data.count)
+                console.log(data.count)
+            })
+        })
+
+
+    </script>
+{% endblock right_content %}

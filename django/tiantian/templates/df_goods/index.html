@@ -1,0 +1,282 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/slide.js"></script>
+<script type="text/javascript" src="/static/js/slideshow.js"></script>
+	<script type="text/javascript">
+		BCSlideshow('focuspic');
+		var oFruit = document.getElementById('fruit_more');
+		var oShownum = document.getElementById('show_count');
+
+		var hasorder = localStorage.getItem('order_finish');
+
+		if(hasorder)
+		{
+			oShownum.innerHTML = '2';
+		}
+
+		oFruit.onclick = function(d){
+			window.location.href = 'list.html';
+		}
+	</script>
+{% endblock head %}
+
+{%block body%}
+	<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<li><a href="/goods/index/">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="#">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="#">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+			<li><a href="#model01" class="fruit">新鲜水果</a></li>
+			<li><a href="#model02" class="seafood">海鲜水产</a></li>
+			<li><a href="#model03" class="meet">猪牛羊肉</a></li>
+			<li><a href="#model04" class="egg">禽类蛋品</a></li>
+			<li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>
+			<li><a href="#model06" class="ice">速冻食品</a></li>
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+				<li><img src="/static/images/slide.jpg" alt="幻灯片"></li>
+				<li><img src="/static/images/slide02.jpg" alt="幻灯片"></li>
+				<li><img src="/static/images/slide03.jpg" alt="幻灯片"></li>
+				<li><img src="/static/images/slide04.jpg" alt="幻灯片"></li>
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+			<a href="#"><img src="/static/images/adv01.jpg"></a>
+			<a href="#"><img src="/static/images/adv02.jpg"></a>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model01">新鲜水果</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+{#				<--开始处理-->#}
+{#				 <a href="">  ...</a>#}
+{#				<--处理结束-->#}
+			</div>
+			<a href="/goods/list1_1_1/" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="/static/images/banner01.jpg"></div>
+			<ul class="goods_list fl">
+{#				<--开始处理-->#}
+                {% for fruit in fruits %}
+				<li>
+					<!--images/goods/goods003.jpg-->
+					<h4><a href="/goods/details/?good={{ fruit.id }}">{{ fruit.pro_desc }}...</a></h4>
+					<a href="/goods/details/?good={{ fruit.id }}"><img src="/static/{{ fruit.pro_img }}"></a>
+					<div class="prize">¥{{ fruit.price }}</div>
+				</li>
+                {% endfor %}
+{#				<--处理结束-->#}
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model02">海鲜水产</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+{#				<--开始处理-->#}
+{#				<a href="">...</a>#}
+{#				<--处理结束-->#}
+			</div>
+			<a href="/goods/list2_1_1/" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="/static/images/banner02.jpg"></div>
+			<ul class="goods_list fl">
+
+{#				<--开始处理-->#}
+			{% for hai in hais %}
+				<li>
+					<h4><a href="/goods/details/?good={{ hai.id }}">{{ hai.pro_desc }}...</a></h4>
+					<a href="/goods/details/?good={{ hai.id }}"><img src="/static/{{ hai.pro_img }}"></a>
+					<div class="prize">¥{{ hai.price }}</div>
+				</li>
+			{% endfor %}
+{#				<--处理结束-->#}
+			
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model03">猪牛羊肉</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				
+{#				<--开始处理-->#}
+
+{#				<a href=""> ...</a>#}
+
+{#				<--处理结束-->#}
+
+			</div>
+			<a href="/goods/list3_1_1/" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="/static/images/banner03.jpg"></div>
+			<ul class="goods_list fl">
+				
+{#				<--开始处理-->#}
+{% for rou in rous %}
+				<li>
+					<h4><a href="/goods/details/?good={{ rou.id }}">{{ rou.pro_desc }}...</a></h4>
+					<a href="/goods/details/?good={{ rou.id }}"><img src="/static/{{ rou.pro_img }}"></a>
+					<div class="prize">¥{{ rou.price }}</div>
+				</li>
+				{% endfor %}
+{#				<--处理结束-->#}
+
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model04">禽类蛋品</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				
+{#				<--开始处理-->#}
+{#				<a href=""> ...</a>#}
+{#				<--处理结束-->#}
+			</div>
+			<a href="/goods/list4_1_1/" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="/static/images/banner04.jpg"></div>
+			<ul class="goods_list fl">
+				
+{#				<--开始处理-->#}
+                {% for qin in qins %}
+				<li>
+					<h4><a href="/goods/details/?good={{ qin.id }}">{{ qin.pro_desc }}...</a></h4>
+					<a href="/goods/details/?good={{ qin.id }}"><img src="/static/{{ qin.pro_img }}"></a>
+					<div class="prize">¥{{ qin.price }}</div>
+				</li>
+                {% endfor %}
+{#				<--处理结束-->#}
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model05">新鲜蔬菜</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				
+{#				<--开始处理-->#}
+{#				<a href="">...</a>#}
+{#				<--处理结束-->#}
+			</div>
+			<a href="/goods/list5_1_1/" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="/static/images/banner05.jpg"></div>
+			<ul class="goods_list fl">
+{#				<--开始处理-->#}
+				{% for cai in cais %}
+                <li>
+					<h4><a href="/goods/details/?good={{ cai.id }}">{{ cai.pro_desc }}...</a></h4>
+					<a href="/goods/details/?good={{ cai.id }}"><img src="/static/{{ cai.pro_img }}"></a>
+					<div class="prize">¥{{ cai.price }}</div>
+				</li>
+                {% endfor %}
+{#				<--处理结束-->#}
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model06">速冻食品</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+{#				<--开始处理-->#}
+{#				<a href="">...</a>#}
+{#				<--处理结束-->#}
+			</div>
+			<a href="/goods/list6_1_1/" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="/static/images/banner06.jpg"></div>
+			<ul class="goods_list fl">
+				
+{#				<--开始处理-->#}
+                {% for dong in dongs %}
+				<li>
+					<h4><a href="/goods/details/?good={{ dong.id }}">{{ dong.pro_desc }}...</a></h4>
+					<a href="/goods/details/?good={{ dong.id }}"><img src="/static/{{ dong.pro_img }}"></a>
+					<div class="prize">¥{{ dong.price }}</div>
+				</li>
+				{% endfor %}
+{#				<--处理结束-->#}
+			</ul>
+		</div>
+	</div>
+{%endblock body%}
+
+
+{%block foot%}
+<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	<script type="text/javascript" src="js/slideshow.js"></script>
+	<script type="text/javascript">
+		BCSlideshow('focuspic');
+		var oFruit = document.getElementById('fruit_more');
+		var oShownum = document.getElementById('show_count');
+
+		var hasorder = localStorage.getItem('order_finish');
+
+		if(hasorder)
+		{
+			oShownum.innerHTML = '2';
+		}
+
+		oFruit.onclick = function(){
+			window.location.href = 'list.html';
+		}
+	</script>
+</body>
+</html>
+{%endblock foot%}

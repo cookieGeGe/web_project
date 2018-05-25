@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block EXTJS %}
+    <script type="text/javascript" src="{% static 'app/market/js/myjs.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <h3>订单列表</h3>
+
+    <a href="{% url 'axf:mine' %}">返回我的页面</a>
+
+    <ul>
+        <!--订单展示-->
+        {% for data in datas %}
+            <li>
+                <a href="#">
+                    {% if data.o_status == 0 %}
+                        <p><a href="{% url 'axf:pay' data.id %}">订单ID：{{ data.id }}</a></p>
+                    {% elif data.o_status == 2 %}
+                        <p><a href="{% url 'axf:orderlist' %}">订单ID:{{ data.id }}</a></p>
+                    {% else %}
+                        <p><!-- 订单id -->订单ID：{{ data.id }}</p>
+                    {% endif %}
+                    <p><!-- 数量 -->订单商品数量：{{ data.o_num }}</p>
+                    {% if data.o_status == 0 %}
+                        <p>未付款订单</p>
+                    {% elif data.o_status == 1 %}
+                        <p>未发货订单</p>
+                    {% elif data.o_status  == 2 %}
+                        <p>已发货订单</p>
+                    {% else %}
+                        <p>已确认收货</p>
+                    {% endif %}
+                    <!--展示商品的名称-->
+                    {% for good in data.ordergoodmodel_set.all %}
+                        <li>
+                            <img src="{{ good.goods.productimg }}" alt="">
+                            <p>描述：{{ good.goods.productlongname }}</p>
+                        </li>
+                    {% endfor %}
+                    <!--处理结束-->
+                    <hr/>
+                </a>
+            </li>
+        {% endfor %}
+        <!--订单处理结束-->
+
+    </ul>
+
+
+{% endblock %}

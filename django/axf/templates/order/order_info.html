@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block EXTJS %}
+    <script type="text/javascript" src="{% static 'app/order/js/order.js' %}"></script>
+    <script type="text/javascript" src="{% static 'app/market/js/myjs.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div id="order_info" class="container">
+
+    <a href="{% url 'axf:mine' %}">返回我的页面</a>
+
+    <!--订单编号-->
+    <h3>订单编号:{{ orderpay}}</h3>
+    <!--处理结束-->
+    <ul>
+
+        <!--所有订单信息展示-->
+        {% for goods in goodspay %}
+            <li>
+                <!--商品名称展示-->
+                {{ goods.goods.productlongname }}
+                <img src="{{ goods.goods.productimg }}">
+
+                <span> <!-- 数量展示 -->{{ goods.goods_num }}</span>
+            </li>
+        {% endfor %}
+        <!--订单处理结束-->
+
+    </ul>
+        <!--订单id展示-->
+    {% csrf_token %}
+        <button onclick="orderpay({{ orderpay }})">Alipay</button>
+
+    </div>
+
+
+{% endblock %}

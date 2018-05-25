@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block EXTJS %}
+    <script type="text/javascript" src="{% static 'app/market/js/myjs.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <h3>待收货订单列表</h3>
+
+    <a href="{% url 'axf:mine' %}">返回我的页面</a>
+
+    <ul>
+        <!--订单展示-->
+        {% for data in datas %}
+            <li>
+                <a href="#">
+                    <p><!-- 订单id -->订单ID：{{ data.id }}</p>
+                    <p><!-- 数量 -->订单商品数量：{{ data.o_num }}</p>
+                    {% if data.o_status == 1 %}
+                        <p>未发货订单</p>
+                    {% else %}
+                        <p>已发货订单</p>
+                    {% endif %}
+
+                    <!--展示商品的名称-->
+                    {% for good in data.ordergoodmodel_set.all %}
+                        <li>
+                            <img src="{{ good.goods.productimg }}" alt="">
+                            <p>描述：{{ good.goods.productlongname }}</p>
+                        </li>
+
+                    {% endfor %}
+            <!--处理结束-->
+            <hr/>
+            </a>
+            </li>
+
+            {% csrf_token %}
+            <button onclick="confirm_rec({{ data.id }})">确认收货</button>
+
+        {% endfor %}
+        <!--订单处理结束-->
+
+    </ul>
+
+
+{% endblock %}

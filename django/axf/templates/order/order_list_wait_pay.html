@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <h3>待付款订单列表</h3>
+
+    <a href="{% url 'axf:mine' %}">返回我的页面</a>
+
+    <ul>
+        <!--订单信息展示-->
+        {% for data in datas %}
+            <li>
+                <a href="">
+                    <p><!-- 订单id --><a href="{% url 'axf:pay' data.id %}">订单ID：{{ data.id }}</a></p>
+                    <p><!-- 数量 -->订单商品数量：{{ data.o_num }}</p>
+                    <!--展示商品的名称-->
+                    {% for good in data.ordergoodmodel_set.all %}
+                        <li>
+                            <img src="{{ good.goods.productimg }}" alt="">
+                            <p>描述：{{ good.goods.productlongname }}</p>
+                        </li>
+
+                    {% endfor %}
+            <!--处理结束-->
+            <hr />
+            </a>
+            </li>
+        {% endfor %}
+        <!--订单处理结束-->
+
+
+    </ul>
+
+
+{% endblock %}

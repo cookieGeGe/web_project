@@ -1,0 +1,121 @@
+
+{%extends 'df_user/base.html'%}
+{% block right_content %}
+<div class="right_content clearfix">
+    <h3 class="common_title2">全部订单</h3>
+   
+{#   <--开始处理-->#}
+    {% for order in page %}
+    <ul class="order_list_th w978 clearfix">
+        <li class="col01"></li>
+        <li class="col02">订单号：{{ order.id }}</li>
+        
+        {% if order.o_status != 0 %}
+        <li class="col02 stress">已支付</li>
+        {% else %}
+        <li class="col02 stress">未支付</li>
+        {% endif %}
+
+    </ul>
+    <table class="order_list_table w980">
+        <tbody>
+        <tr>
+            <td width="55%">
+               
+{#               <--开始处理-->#}
+                {% for good in order.ordergoodmodel_set.all %}
+                <ul class="order_goods_list clearfix">
+                    <li class="col01"><img src="/static/{{ good.goods.pro_img }}"></li>
+                    <li class="col02"><em><span>{{ good.goods.price }}</span>元/500g</em>
+                    </li>
+                    <li class="col03">1个</li>
+                    <li class="col04"></li>
+                </ul>
+                    {% endfor %}
+{#                <--开始处理-->#}
+            </td>
+            <td width="15%">{{ order.o_totalpay }}元</td>
+            
+{#            <--开始处理-->#}
+            {% if order.o_status != 0 %}
+            <td width="15%">已付款</td>
+            <td width="15%"><a href="#" class="oper_btn">查看物流</a></td>
+            {% else %}
+            <td width="15%">未付款</td>
+            <td width="15%"><a href="/order/pay_{{order.id}}/" class="oper_btn">去付款</a></td>
+            {% endif %}
+{#            <--处理结束-->#}
+        </tr>
+        </tbody>
+    </table>
+   {% endfor %}
+{#    <--处理结束-->#}
+
+    <div class="pagenation">
+        
+{#        <--开始处理-->#}
+        {% if page.has_previous %}
+        <a href="/user/userorder/?page={{ page.previous_page_number }}">
+            上一页
+        </a>
+        {% endif %}
+{#        <--处理结束-->#}
+{#    分页 ： plist 一共多少页  pageid 当前页  orderlist paginator按照两个一页，分的，页的指向对象  #}
+
+
+{#            <a href="" class="active"></a>#}
+        {% for i in page.paginator.page_range %}
+            {% if i == page.number %}
+            <a href="" class="active">{{ i }}</a>
+            {% else %}
+            <a href="/user/userorder/?page={{ i }}" >{{ i }}</a>
+            {% endif %}
+    {% endfor %}
+{##}
+{#            <a href="" >{{pre}}</a>#}
+{#            <a href="" class="active"></a>#}
+{#        #}
+{##}
+{##}
+{#            #}
+{#            <a href="" class="active"></a>#}
+{#            <a href="" ></a>#}
+{#            <a href="" ></a>#}
+{#            #}
+{##}
+{#            <a href="" ></a>#}
+{#            <a href="" class="active"></a>#}
+{#            <a href="" ></a>#}
+{#            #}
+{#            <a href="" ></a>#}
+{#            <a href="" ></a>#}
+{#            <a href="" class="active"></a>#}
+{#            #}
+{##}
+{#   #}
+{##}
+{##}
+{#        <a href="" ></a>#}
+{#        <a href="" class="active"></a>#}
+{#        <a href="" ></a>#}
+{#       #}
+{#        <a href="" class="active"></a>#}
+{#        <a href="" ></a>#}
+{#        <a href="" ></a>#}
+{#        #}
+{##}
+{#        <a href="" ></a>#}
+{#        <a href="" ></a>#}
+{#        <a href="" class="active"></a>#}
+{#   #}
+
+
+       {% if page.has_next %}
+        <a href="/user/userorder/?page={{ page.next_page_number }}">下一页></a>
+    {% endif %}
+{#       <--处理分页结束-->#}
+    </div>
+</div>
+
+
+{% endblock %}

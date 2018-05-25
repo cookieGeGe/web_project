@@ -1,0 +1,76 @@
+
+{%extends 'df_goods/base.html'%}
+{% block head %}
+<script>
+  $(function() {
+      $('.add_goods').click(function () {
+          id = $(this).attr('id')
+          url = '/cart/add' + id + '_1/';
+          $.get(url, function (data) {
+              $('#show_count').text(data.count)
+          })
+      })
+  })
+ </script>
+{% endblock head%}
+{% block list %}
+<div class="r_wrap fr clearfix">
+    <div class="sort_bar">
+        <a href="/goods/list{{ proid }}_1_1/"
+            {% if order == 1 %}
+        class="active"
+        {% endif %}
+        >默认</a>
+        <a href="/goods/list{{ proid }}_1_2/"
+           {% if order == 2 %}
+        class="active"
+        {% endif %}
+        >价格</a>
+        <a href="/goods/list{{ proid }}_1_3/"
+           {% if order == 3 %}
+        class="active"
+        {% endif %}
+        >人气</a>
+    </div>
+    <ul class="goods_type_list clearfix">
+{#        <--开始处理-->#}
+        {% for good in showpage %}
+        <li>
+            <a href="/goods/details/?good={{ good.id }}"><img src="/static/{{ good.pro_img }}"></a>
+            <h4><a href="/goods/details/?good={{ good.id }}">{{ good.pro_desc }}</a></h4>
+            <div class="operate">
+                <span class="prize">￥{{ good.price }}</span>
+                <span class="unit">500g</span>
+                 {% if request.user != None %}
+					<a href="javascript:;" id="{{ good.id }}" class="add_goods" title="加入购物车"></a>
+				 {% else %}
+      				<a href="/user/login/" class="add_goods" title="加入购物车"></a>
+				 {% endif %}
+            </div>
+        </li>
+{#        <--处理结束-->#}
+         {% endfor %}
+    </ul>
+
+    <div class="pagenation">
+        {% if showpage.has_previous %}
+        <a href="/goods/list{{ proid }}_{{ showpage.previous_page_number }}_{{ order }}/"><上一页 </a>
+        {% endif %}
+
+{#        <--页码处理开始-->#}
+        {% for num in showpage.paginator.page_range %}
+        <!--如果选择的是当前页，则标记为活动样式-->
+            {% if num == page %}
+        <a href="#" class="active">{{ page }}</a>
+            {% else %}
+        <a href="/goods/list{{ proid }}_{{ num }}_{{ order }}/">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+{#        <--处理结束-->#}
+        {% if showpage.has_next %}
+        <a href="/goods/list{{ proid }}_{{ showpage.next_page_number }}_{{ order }}/">下一页></a>
+        {% endif %}
+    </div>
+</div>
+</div>
+{%endblock list%}
